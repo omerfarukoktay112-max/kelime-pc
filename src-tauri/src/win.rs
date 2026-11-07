@@ -3,7 +3,10 @@
 use std::sync::Mutex;
 
 use tauri::WebviewWindow;
-use webview2_com::Microsoft::Web::WebView2::Win32::ICoreWebView2_3;
+use webview2_com::Microsoft::Web::WebView2::Win32::{
+    ICoreWebView2_19, ICoreWebView2_3, COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_LOW,
+    COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL,
+};
 use webview2_com::TrySuspendCompletedHandler;
 use windows::core::{Interface, HSTRING};
 use windows::Foundation::TimeSpan;
@@ -17,7 +20,7 @@ use windows_collections::IIterable;
 use windows_future::IAsyncOperation;
 
 /// Pencere gizlenince / simge durumuna küçülünce WebView2'yi askıya alır: sayfa donar,
-/// zamanlayıcılar ve çizim durur, bellek bir kısmı geri verilir. Pencere açılınca kaldığı
+/// zamanlayıcılar ve çizim durur, bellek hedefi düşürülür. Pencere açılınca kaldığı
 /// yerden devam eder.
 pub fn set_webview_suspended(window: &WebviewWindow, suspended: bool) {
     let _ = window.with_webview(move |wv| unsafe {
@@ -25,6 +28,15 @@ pub fn set_webview_suspended(window: &WebviewWindow, suspended: bool) {
         // TrySuspend yalnızca görünmez webview'da çalışır
         let _ = controller.SetIsVisible(!suspended);
         let Ok(core) = controller.CoreWebView2() else { return };
+        // Bellek hedefi: gizliyken WebView2 önbelleklerini boşaltır, geri gelince normale döner
+        if let Ok(core19) = core.cast::<ICoreWebView2_19>() {
+            let level = if suspended {
+                COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_LOW
+            } else {
+                COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL
+            };
+            let _ = core19.SetMemoryUsageTargetLevel(level);
+        }
         let Ok(core3) = core.cast::<ICoreWebView2_3>() else { return };
         if suspended {
             let handler = TrySuspendCompletedHandler::create(Box::new(|_, _| Ok(())));
