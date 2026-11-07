@@ -78,7 +78,7 @@ $report = @"
 kelime Windows duman testi
 --------------------------
 Veritabanı hazır          : $dbMs ms
-Pencere görünür           : $windowMs ms
+Pencere görünür (ilk)     : $windowMs ms
 Süreç sayısı              : $($b.Count)  (kelime.exe + WebView2)
 Bellek (açık, boşta)      : $($b.PrivateMB) MB özel / $($b.WorkingSetMB) MB çalışma kümesi
 CPU (açık, boşta, 20 sn)  : %$idleCpu (tek çekirdeğe göre)
@@ -93,5 +93,19 @@ Write-Output $report
 $report | Out-File -Encoding utf8 smoke-report.txt
 
 Stop-Process -Id $p.Id -Force
+Get-Process msedgewebview2 -ErrorAction SilentlyContinue | Where-Object { $_.Parent.Id -eq $p.Id } | Stop-Process -Force
+Start-Sleep -Seconds 3
+
+# İkinci açılış: WebView2 veri klasörü artık hazır (kullanıcının her günkü açılışı bu)
+$sw2 = [Diagnostics.Stopwatch]::StartNew()
+$p2 = Start-Process -FilePath $Exe -PassThru
+while ($sw2.Elapsed.TotalSeconds -lt 20) {
+  $p2.Refresh()
+  if ($p2.MainWindowHandle -ne 0) { break }
+  Start-Sleep -Milliseconds 50
+}
+$warmMs = $sw2.ElapsedMilliseconds
+"İkinci açılış, pencere     : $warmMs ms" | Tee-Object -FilePath smoke-report.txt -Append
+Stop-Process -Id $p2.Id -Force
 if ($idleCpu -gt 5) { throw "Boştayken CPU çok yüksek: %$idleCpu" }
 if ($trayCpu -gt 2) { throw "Tepsideyken CPU çok yüksek: %$trayCpu" }

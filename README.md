@@ -91,8 +91,16 @@ Bunlara ek olarak:
 | Pasife alma (işlem başına) | ~3 ms |
 | Kaydırma (kare başına) | ~3 ms |
 
-Kurulum dosyası **2,2 MB**, `kelime.exe` 5 MB. Windows'taki gerçek uygulamanın bellek ve CPU ölçümleri
-(açıkken, boşta ve simge durumundayken) `scripts/smoke-test.ps1` ile alınır (PowerShell'de: `./scripts/smoke-test.ps1 -Exe <kelime.exe yolu>`).
+Windows'ta gerçek uygulama (GitHub Actions, `scripts/smoke-test.ps1`):
+
+| | |
+| --- | --- |
+| Kurulum dosyası / `kelime.exe` | 2,2 MB / 5 MB |
+| CPU: açık ve boşta / simge durumunda / tepside | ~%0,1–0,3 / ~%0,3 / ~%0,15 |
+| Bellek (kelime.exe + WebView2 süreçleri, özel) | ~110–118 MB |
+
+Belleğin büyük kısmı Windows'un WebView2 bileşeninden gelir (Edge ile aynı motor). Electron tabanlı
+uygulamalarda bu genellikle iki ila üç katıdır. Kendi ölçümün için PowerShell'de: `./scripts/smoke-test.ps1 -Exe <kelime.exe yolu>`.
 
 ## Geliştirme
 
