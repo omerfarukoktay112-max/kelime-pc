@@ -8,6 +8,13 @@
 <p align="center"><b>Türkçe arayüzle İngilizce kelime öğren — Windows sürümü.</b><br>
 A1'den C2'ye 5.600 kelime · aralıklı tekrar · sesli çalışma · büyüyen bir ağaç</p>
 
+<p align="center">
+  <img src="docs/screenshots/01-ana-ekran.png" width="200" alt="Ana ekran">
+  <img src="docs/screenshots/03-coktan-secmeli.png" width="200" alt="Çoktan seçmeli">
+  <img src="docs/screenshots/07-profil-agac.png" width="200" alt="Profil ve ağaç">
+  <img src="docs/screenshots/09-ana-ekran-acik.png" width="200" alt="Açık tema">
+</p>
+
 [kelime](https://github.com/omerfarukoktay112-max/kelime) mobil uygulamasının bilgisayar sürümü. Aynı kelime
 verisi, aynı tekrar kuralları, aynı tasarım; ama asıl hedef şu: **başka bir işle uğraşırken arkada açık duran
 bir İngilizce çalışma uygulaması bilgisayarı yormamalı.**
@@ -16,6 +23,29 @@ bir İngilizce çalışma uygulaması bilgisayarı yormamalı.**
 
 [Releases](../../releases/latest) sayfasından `kelime_x.y.z_x64-setup.exe` dosyasını indirip çalıştır.
 Yönetici izni istemez (yalnızca senin kullanıcı hesabına kurulur). Windows 10 ve 11'de çalışır.
+
+## Ekranlar
+
+| Çoktan seçmeli | Eşleştirme | Sesli |
+| :---: | :---: | :---: |
+| <img src="docs/screenshots/03-coktan-secmeli.png" width="220"> | <img src="docs/screenshots/04-eslestirme.png" width="220"> | <img src="docs/screenshots/05-sesli.png" width="220"> |
+| Kelime gelir, 4 seçenekten doğru karşılığı bul. `1`–`4` ile seç, `Enter` ile devam et. | 8 İngilizce kelimeyi Türkçe karşılıklarıyla eşleştir. | Türkçe kelimeyi gör, İngilizcesini söyle ya da yaz. |
+
+| Kelime listesi | Profil | Açık tema |
+| :---: | :---: | :---: |
+| <img src="docs/screenshots/06-kelime-listesi.png" width="220"> | <img src="docs/screenshots/07-profil-agac.png" width="220"> | <img src="docs/screenshots/10-profil-acik.png" width="220"> |
+| Bildiğin kelimeleri kapat, ara. | Günlük hedefini tamamladıkça ağacın büyür. | Koyu ve açık tema, üç yazı boyutu. |
+
+<details>
+<summary>Diğer ekranlar</summary>
+<p>
+  <img src="docs/screenshots/02-calisma-ayari.png" width="200" alt="Çalışma ayarı">
+  <img src="docs/screenshots/08-ayarlar.png" width="200" alt="Ayarlar">
+  <img src="docs/screenshots/09-ana-ekran-acik.png" width="200" alt="Ana ekran, açık tema">
+</p>
+</details>
+
+Görüntüler `npm run screenshots` ile uygulamanın kendisinden üretilir.
 
 ## Mobil sürümden farkları
 
