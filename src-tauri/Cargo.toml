@@ -33,6 +33,8 @@ strip = true
 [target."cfg(windows)".dependencies]
 webview2-com = "0.39.1"
 windows = { version = "0.62.2", features = ["Foundation", "Foundation_Collections", "Globalization", "Media_SpeechRecognition", "Win32_System_WinRT"] }
+windows-collections = "0.3.2"
+windows-future = "0.3.2"
 
 [dev-dependencies]
 tempfile = "3.27.0"

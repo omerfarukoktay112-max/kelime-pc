@@ -1917,6 +1917,8 @@ dependencies = [
  "tempfile",
  "webview2-com",
  "windows",
+ "windows-collections",
+ "windows-future",
 ]
 
 [[package]]

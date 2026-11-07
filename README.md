@@ -61,8 +61,8 @@ Bunlara ek olarak:
 | Pasife alma (işlem başına) | ~3 ms |
 | Kaydırma (kare başına) | ~3 ms |
 
-Windows'taki gerçek uygulamanın ölçümleri (bellek, boşta ve simge durumundayken CPU, kurulum boyutu) her derlemede
-GitHub Actions'ta `scripts/smoke-test.ps1` ile alınır. `smoke-report.txt` derleme çıktısındadır.
+Kurulum dosyası **2,2 MB**, `kelime.exe` 5 MB. Windows'taki gerçek uygulamanın bellek ve CPU ölçümleri
+(açıkken, boşta ve simge durumundayken) `scripts/smoke-test.ps1` ile alınır (PowerShell'de: `./scripts/smoke-test.ps1 -Exe <kelime.exe yolu>`).
 
 ## Geliştirme
 
@@ -81,8 +81,18 @@ cd src-tauri && cargo test   # SQLite katmanı
 npx tauri build         # Windows kurulum dosyası: src-tauri/target/release/bundle/nsis/
 ```
 
-Windows kurulum dosyası Mac'ten üretilmez; `main` dalına her gönderimde ya da `v*` etiketinde
-GitHub Actions (`.github/workflows/windows.yml`) Windows'ta test eder, derler ve ölçer. Etiketli sürümler Releases'e yüklenir.
+**Mac'ten Windows kurulum dosyası** (çapraz derleme):
+
+```bash
+brew install llvm lld nsis && cargo install --locked cargo-xwin
+rustup target add x86_64-pc-windows-msvc
+PATH="$(brew --prefix llvm)/bin:$(brew --prefix lld)/bin:$PATH" \
+  npx tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc
+# -> src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/kelime_1.0.0_x64-setup.exe
+```
+
+Proje GitHub'a gönderilirse `.github/workflows/windows.yml` her gönderimde Windows'ta testleri çalıştırır,
+kurulum dosyasını üretir ve `scripts/smoke-test.ps1` ile uygulamayı başlatıp ölçer. `v*` etiketli sürümleri Releases'e yükler.
 
 ### Kelime verisi
 

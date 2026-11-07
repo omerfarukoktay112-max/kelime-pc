@@ -6,14 +6,15 @@ use tauri::WebviewWindow;
 use webview2_com::Microsoft::Web::WebView2::Win32::ICoreWebView2_3;
 use webview2_com::TrySuspendCompletedHandler;
 use windows::core::{Interface, HSTRING};
-use windows::Foundation::Collections::IIterable;
-use windows::Foundation::{IAsyncOperation, TimeSpan};
+use windows::Foundation::TimeSpan;
 use windows::Globalization::Language;
 use windows::Media::SpeechRecognition::{
     SpeechRecognitionConfidence, SpeechRecognitionListConstraint, SpeechRecognitionResult,
     SpeechRecognitionResultStatus, SpeechRecognizer,
 };
 use windows::Win32::System::WinRT::{RoInitialize, RO_INIT_MULTITHREADED};
+use windows_collections::IIterable;
+use windows_future::IAsyncOperation;
 
 /// Pencere gizlenince / simge durumuna küçülünce WebView2'yi askıya alır: sayfa donar,
 /// zamanlayıcılar ve çizim durur, bellek bir kısmı geri verilir. Pencere açılınca kaldığı

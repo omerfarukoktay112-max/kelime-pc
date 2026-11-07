@@ -159,11 +159,13 @@ fn main_window(app: &AppHandle) -> Option<WebviewWindow> {
 
 fn set_suspended(window: &WebviewWindow, suspended: bool) {
     let state = window.state::<AppState>();
-    if state.suspended.swap(suspended, Ordering::Relaxed) == suspended {
-        return;
-    }
+    let changed = state.suspended.swap(suspended, Ordering::Relaxed) != suspended;
     #[cfg(windows)]
-    win::set_webview_suspended(window, suspended);
+    if changed {
+        win::set_webview_suspended(window, suspended);
+    }
+    #[cfg(not(windows))]
+    let _ = changed;
 }
 
 fn show_main(app: &AppHandle) {
