@@ -1,0 +1,63 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "kelime",
+  "mainBinaryName": "kelime",
+  "version": "1.0.0",
+  "identifier": "com.omerfarukoktay.kelime",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "kelime",
+        "width": 540,
+        "height": 820,
+        "minWidth": 420,
+        "minHeight": 600,
+        "center": true,
+        "visible": false,
+        "resizable": true,
+        "backgroundColor": "#2d1b69"
+      }
+    ],
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "script-src": "'self'",
+        "style-src": "'self' 'unsafe-inline'",
+        "font-src": "'self'",
+        "img-src": "'self' data:",
+        "connect-src": "'self' ipc: http://ipc.localhost",
+        "media-src": "'self'"
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "shortDescription": "Türkçe arayüzle İngilizce kelime öğren",
+    "longDescription": "A1'den C2'ye 5.600 kelime, aralıklı tekrar, sesli çalışma ve büyüyen bir ağaç.",
+    "copyright": "MIT (kod) · CC BY-NC 4.0 (kelime verisi)",
+    "category": "Education",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "webviewInstallMode": { "type": "downloadBootstrapper", "silent": true },
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["Turkish"],
+        "displayLanguageSelector": false
+      }
+    }
+  }
+}
